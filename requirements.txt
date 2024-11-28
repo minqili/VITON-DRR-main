@@ -1,0 +1,8 @@
+ipdb == 0.13.13
+opencv-python == 4.7.0.72
+pillow == 9.4.0
+torch == 1.12.1
+tensorboardX == 2.6
+tqdm == 4.65.0
+scikit-image == 0.18.3
+torchgeometry == 0.1.2
