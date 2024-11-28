@@ -1,7 +1,11 @@
 # VITON-DRR: Details Retention Virtual Try-on via Non-rigid Registration
 
-## Introduction
+
 This repo is a pytorch implementation of the virtual try-on paper **VITON-DRR**
+
+## Abstract
+Image-based virtual try-on aims to fit a target garment to a specific person image and has attracted extensive research attention because of its huge application potential in the e-commerce and fashion industries. To generate high-quality try-on results,  accurately warping the clothing item to fit the human body plays a significant role, as slight misalignment may lead to unrealistic artifacts in the fitting image. Most existing methods warp the clothing by feature matching and thin-plate spline (TPS). However, it often failed to preserve clothing details  due to self-occlusion, severe misalignment between poses, etc. To address these challenges, this paper proposes a detail retention virtual try-on method via accurate non-rigid registration (VITON-DRR) for diverse human poses. Specifically, we reconstruct a human semantic segmentation using a dual-pyramid-structured feature extractor. Then, a novel Deformation Module is designed for extracting the cloth key points and warping them through an accurate non-rigid registration algorithm. Finally, the Image Synthesis Module is designed to synthesize the deformed garment image and generate the human pose information adaptively. Compared with traditional methods, the proposed VITON-DRR can make the deformation of fitting images more accurate and retain more garment details. The experimental results demonstrate that the proposed method performs better than state-of-the-art methods.
+![Pipeline Structure](./structure.png)
 
 ## Installation
 `ipdb == 0.13.13`  
