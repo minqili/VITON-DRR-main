@@ -14,6 +14,9 @@ writer = SummaryWriter('runs/G1G2')
 SIZE = 320
 NC = 14
 
+import os
+os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
+
 
 def generate_label_plain(inputs):
     size = inputs.size()
@@ -62,9 +65,9 @@ def compose(label, mask, color_mask, edge, color, noise):
 
 def changearm(old_label):
     label = old_label
-    arm1 = torch.FloatTensor((old_label.cpu().numpy() == 11).astype(np.int))
-    arm2 = torch.FloatTensor((old_label.cpu().numpy() == 13).astype(np.int))
-    noise = torch.FloatTensor((old_label.cpu().numpy() == 7).astype(np.int))
+    arm1 = torch.FloatTensor((old_label.cpu().numpy() == 11).astype(np.float32))
+    arm2 = torch.FloatTensor((old_label.cpu().numpy() == 13).astype(np.float32))
+    noise = torch.FloatTensor((old_label.cpu().numpy() == 7).astype(np.float32))
     label = label*(1-arm1)+arm1*4
     label = label*(1-arm2)+arm2*4
     label = label*(1-noise)+noise*4
@@ -87,13 +90,13 @@ def main():
         # add gaussian noise channel
         # wash the label
         t_mask = torch.FloatTensor(
-            (data['label'].cpu().numpy() == 7).astype(np.float))
+            (data['label'].cpu().numpy() == 7).astype(np.float32))
         #
         # data['label'] = data['label'] * (1 - t_mask) + t_mask * 4
         mask_clothes = torch.FloatTensor(
-            (data['label'].cpu().numpy() == 4).astype(np.int))
+            (data['label'].cpu().numpy() == 4).astype(np.float32))
         mask_fore = torch.FloatTensor(
-            (data['label'].cpu().numpy() > 0).astype(np.int))
+            (data['label'].cpu().numpy() > 0).astype(np.float32))
         img_fore = data['image'] * mask_fore
         img_fore_wc = img_fore * mask_fore
         all_clothes_label = changearm(data['label'])
@@ -120,7 +123,7 @@ def main():
                                       os.path.join(warped_cloth_dir, data['name'][j], name))
             util.save_tensor_as_image(refined_cloth[j],
                                       os.path.join(refined_cloth_dir, data['name'][j],name))
-
+        break
 
 
 if __name__ == '__main__':
