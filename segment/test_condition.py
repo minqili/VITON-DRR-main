@@ -32,8 +32,8 @@ def get_opt():
 
     parser.add_argument('--tensorboard_dir', type=str, default='tensorboard', help='save tensorboard infos')
     parser.add_argument('--checkpoint_dir', type=str, default='checkpoints', help='save checkpoint infos')
-    parser.add_argument('--tocg_checkpoint', type=str, default='.\checkpoints\\train_311/tocg_final.pth', help='tocg checkpoint')
-    parser.add_argument('--D_checkpoint', type=str, default='.\checkpoints\\train_311/D_final.pth', help='D checkpoint')
+    parser.add_argument('--tocg_checkpoint', type=str, default='.\checkpoints\\tocg_final.pth', help='tocg checkpoint')
+    parser.add_argument('--D_checkpoint', type=str, default='.\checkpoints\\D_final.pth', help='D checkpoint')
     
     parser.add_argument("--tensorboard_count", type=int, default=100)
     parser.add_argument("--shuffle", action='store_true', help='shuffle input data')
@@ -249,7 +249,7 @@ def test(opt, test_loader, board, tocg, D=None):
             pre_seg = mapping_2(pre_seg).squeeze().detach().cpu().numpy()
             # pre_seg = F.interpolate(pre_seg, scale_factor=2, mode='bilinear').squeeze().detach().numpy()
             iname = inputs['im_name'][0].split('=')
-            path = os.path.join(args.dataroot + '/seg_pre',(iname[0] + '.png'))
+            path = os.path.join("../dataset" + '/seg_pre',(iname[0] + '.png'))
             cv2.imwrite(path, pre_seg)
 
         num += c_paired.shape[0]
