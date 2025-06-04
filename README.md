@@ -22,6 +22,25 @@ Image-based virtual try-on aims to fit a target garment to a specific person ima
 #### Dataset
 **VITON Dataset** This dataset is presented in [VITON](https://github.com/xthan/VITON), containing 19,000 image pairs, each of which includes a front-view woman image and a top clothing image. After removing the invalid image pairs, it yields 16,253 pairs, further splitting into a training set of 14,221 pairs and a testing set of 2,032 pairs.
 
+### Data dir (Semantics Generation Stage)
+```
+${ROOT}  
+  |-- segment  
+  |   |-- dataset
+  |   |   |-- test
+  |   |   |   |-- cloth
+  |   |   |   |-- cloth-mask
+  |   |   |   |-- image
+  |   |   |   |-- image_agnostic_img
+  |   |   |   |-- image-densepose
+  |   |   |   |-- image-parse-agnostic-v3.2
+  |   |   |   |-- image-parse-v3
+  |   |   |   |-- openpose_json
+
+  ```
+During the execution of the code, different stages correspond to different file structures. The file structure of the Semantics Generation Stage is as shown above. The remaining stages follow the file structure of VITON, which can be seen in the project file examples.
+
+
 ####  Data Pre-processing
 ###### 1. DensePose
 Please check the [detectron2](https://github.com/facebookresearch/detectron2/tree/main/projects/DensePose) repository. Dense pose image obtained by running `apply_net.py`.
@@ -29,11 +48,16 @@ Please check the [detectron2](https://github.com/facebookresearch/detectron2/tre
 ###### 2. Parse agnostic
 You can get a parse agnostic image by the code `./segment/get_parse_agnostic.py`.
 
+###### 3. Openpose
+Build openpose(https://github.com/CMU-Perceptual-Computing-Lab/openpose) on any OS, and run the command below.
+```
+openpose.bin --image_dir {image_path} --hand --disable_blending --display 0 --write_json {save_path} --num_gpu 1 --num_gpu_start 0
+```
+###### 4. Human parse
+Check https://github.com/Engineering-Course/CIHP_PGN for human parsing.
 
 
-
-
-## Train the segment model
+## Train the Semantics Generation model
 You can train the Human Semantics Generation Module with `./segment/train_condition.py`.
 
 ## test 
@@ -43,11 +67,15 @@ You can train the Human Semantics Generation Module with `./segment/train_condit
 
 ## Checkpoint 
 We used the pre-trained models `latest_net_G2.pth` from ACGPN, which can be download from [here](https://drive.google.com/file/d/1UWT6esQIU_d4tUm8cjxDKMhB8joQbrFx/view?usp=sharing).  
-You can download Human Semantics Generation Module checkpoint from [here](https://pan.baidu.com/s/1Ds8Rj6ioTFXppE5vkSLI8A?pwd=x67y).
+You can download Human Semantics Generation Module checkpoint from [here](https://pan.baidu.com/s/1yKNhg_APD41Pd6DV-qMTjQ?pwd=6ydg).
+
+## Inference
+After configuring the dataset, model files and environment, you can directly run the `inference.bat` file to perform inference.
 
 ## Results
 Examples of virtual try-on results synthesized by our method. Given a reference human body image and a product clothing image, our method can synthesize a high-quality virtual try-on result while preserving garment details.
 ![result](./example.png)
+
 
 
 ## Reference
