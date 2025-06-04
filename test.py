@@ -107,22 +107,22 @@ def main():
 
         # make output folders
         output_dir = os.path.join(opt.results_dir, opt.phase)
-        fake_image_dir = os.path.join(output_dir, 'try-on')
+        fake_image_dir = os.path.join("./output", 'try-on')
         os.makedirs(fake_image_dir, exist_ok=True)
-        warped_cloth_dir = os.path.join(output_dir, 'warped_cloth')
+        warped_cloth_dir = os.path.join("./output", 'warped_cloth')
         os.makedirs(warped_cloth_dir, exist_ok=True)
-        refined_cloth_dir = os.path.join(output_dir, 'refined_cloth')
+        refined_cloth_dir = os.path.join("./output", 'refined_cloth')
         os.makedirs(refined_cloth_dir, exist_ok=True)
         name = pname[0].replace('.jpg', '')
         # save output
         for j in range(opt.batchSize):
             print("Saving", data['name'][j])
             util.save_tensor_as_image(fake_image[j],
-                                      os.path.join(fake_image_dir, data['name'][j],name))
+                                      os.path.join(fake_image_dir, name))
             util.save_tensor_as_image(warped_cloth[j],
-                                      os.path.join(warped_cloth_dir, data['name'][j], name))
+                                      os.path.join(warped_cloth_dir,  name))
             util.save_tensor_as_image(refined_cloth[j],
-                                      os.path.join(refined_cloth_dir, data['name'][j],name))
+                                      os.path.join(refined_cloth_dir, name))
         break
 
 
