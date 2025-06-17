@@ -23,7 +23,7 @@ def get_opt():
     parser.add_argument('-b', '--batch-size', type=int, default=1)
     parser.add_argument('--fp16', action='store_true', help='use amp')
 
-    parser.add_argument("--dataroot", default='path\\to\\dataset')
+    parser.add_argument("--dataroot", default='path\\to\\dataset in segment')
     parser.add_argument("--datamode", default='test')
     parser.add_argument("--data_list", default='test1.txt')
     parser.add_argument("--datasetting", default="unpaired")
